@@ -1,9 +1,18 @@
+/* ==========================================================================
+   1. VARIABLES Y CONFIGURACIÓN
+   ========================================================================== */
 :root {
     --spotify-green: #1DB954;
     --spotify-black: #121212;
     --spotify-purple: #5038a0;
     --spotify-pink: #ff4132;
     --spotify-yellow: #f5df4d;
+    --bg-color: var(--spotify-green); /* Color por defecto para tiles */
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -12,13 +21,30 @@ body {
     color: white;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    transition: background-color 1s ease;
+    transition: background-color 0.8s ease;
 }
 
 [x-cloak] { display: none !important; }
 
-/* --- TEXTO Y ANIMACIONES --- */
+/* ==========================================================================
+   2. ANIMACIONES (@keyframes)
+   ========================================================================== */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes errorPulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 0, 51, 0.7); opacity: 1; }
+    50% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255, 0, 51, 0.7); opacity: 0.8; }
+}
+
+/* ==========================================================================
+   3. COMPONENTES GLOBALES
+   ========================================================================== */
+
+/* Texto Hero */
 .hero-text {
     font-family: 'Montserrat', sans-serif;
     line-height: 0.85;
@@ -27,30 +53,7 @@ body {
     letter-spacing: -0.05em;
 }
 
-.bg-gradient-animate {
-    background: linear-gradient(-45deg, #1DB954, #5038a0, #ff4132, #212121);
-    background-size: 400% 400%;
-    animation: gradientShift 12s ease infinite;
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.error-glow {
-    color: #ff0033;
-    text-shadow: 0 0 10px rgba(255, 0, 51, 0.7);
-    animation: errorPulse 1.5s infinite;
-}
-
-@keyframes errorPulse {
-    0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 0, 51, 0.7); opacity: 1; }
-    50% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255, 0, 51, 0.7); opacity: 0.8; }
-}
-
-/* --- LOADER --- */
+/* Loader */
 #loader {
     position: fixed;
     inset: 0;
@@ -68,13 +71,16 @@ body {
     transform: translateY(-100%);
 }
 
-/* --- TARJETAS Y SKILLS --- */
+/* Tarjetas de Proyecto y Skills */
 .project-card, .card-custom {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
+    z-index: 10;
 }
 
-.project-card:hover { transform: translateY(-10px) scale(1.02); }
+.project-card:hover { 
+    transform: translateY(-10px) scale(1.02); 
+}
 
 .project-card img {
     width: 100%;
@@ -83,10 +89,32 @@ body {
     transition: transform 0.5s ease;
 }
 
-.project-card:hover img { transform: scale(1.1); }
+.project-card:hover img { 
+    transform: scale(1.1); 
+}
 
-.card-custom { z-index: 10; }
-.card-custom:hover { transform: scale(1.03) rotate(-1.5deg); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.card-custom:hover { 
+    transform: scale(1.03) rotate(-1.5deg); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+}
+
+/* Botones */
+.btn-contact {
+    transition: all 0.3s ease;
+    box-shadow: 8px 8px 0px #000;
+}
+
+.btn-contact:hover {
+    box-shadow: 0px 0px 0px #000;
+    transform: translate(4px, 4px);
+}
+
+/* Utilidades */
+.bg-gradient-animate {
+    background: linear-gradient(-45deg, #1DB954, #5038a0, #ff4132, #212121);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+}
 
 ul li::before {
     content: "•";
@@ -98,19 +126,9 @@ ul li::before {
     opacity: 0.5;
 }
 
-section div { transition: all 0.3s ease; }
-
-.btn-contact {
-    transition: all 0.3s ease;
-    box-shadow: 8px 8px 0px #000;
-}
-
-.btn-contact:hover {
-    box-shadow: 0px 0px 0px #000;
-    transform: translate(4px, 4px);
-}
-
-/* --- PUZZLE --- */
+/* ==========================================================================
+   4. SECCIÓN DEL PUZZLE
+   ========================================================================== */
 #puzzle-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -121,6 +139,8 @@ section div { transition: all 0.3s ease; }
     background: #000;
     padding: 10px;
     border-radius: 8px;
+    border: 4px solid transparent;
+    transition: all 0.5s ease;
 }
 
 .tile {
@@ -133,54 +153,67 @@ section div { transition: all 0.3s ease; }
     color: #000;
     cursor: pointer;
     border-radius: 4px;
-    transition: transform 0.1s, filter 0.2s;
+    transition: transform 0.2s, filter 0.2s;
     user-select: none;
 }
 
+.tile:active { transform: scale(0.95); }
 .tile:hover { filter: brightness(1.2); transform: scale(1.02); }
 .tile.empty { background: transparent !important; cursor: default; }
 
-/* --- ESTADOS ESPECIALES --- */
+/* ==========================================================================
+   5. ESTADOS ESPECIALES Y ERRORES
+   ========================================================================== */
+.error-glow {
+    color: #ff0033;
+    animation: errorPulse 1.5s infinite;
+}
+
+.win-glow {
+    border-color: var(--spotify-green) !important;
+    box-shadow: 0 0 50px #fff, 0 0 100px var(--spotify-green) !important;
+    transform: scale(1.05);
+}
+
+/* Modos de tema */
 body.special-mode { background-color: #ff0050 !important; }
 body.special-mode .hero-text { color: #fff; text-shadow: 4px 4px 0px #000; }
 
-.win-glow {
-    box-shadow: 0 0 50px #fff, 0 0 100px var(--spotify-green) !important;
-    border: 4px solid #fff !important;
-    transform: scale(1.05);
+.special-mode #game-section h2 { 
+    color: var(--spotify-green); 
+    animation: none; 
+    text-shadow: 0 0 20px var(--spotify-green); 
 }
-/* --- RESPONSIVE ADJUSTMENTS --- */
 
-/* Ajuste para pantallas pequeñas (Móviles) */
+/* ==========================================================================
+   6. MEDIA QUERIES (Responsividad)
+   ========================================================================== */
+
+/* Tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .hero-text { font-size: 6rem; }
+}
+
+/* Móviles */
 @media (max-width: 640px) {
     .hero-text {
-        font-size: 3.5rem; /* Evita que el nombre se corte */
         line-height: 1;
+        font-size: 3rem !important;
     }
 
     #puzzle-grid {
-        width: 260px; /* Un poco más pequeño para que no toque los bordes */
+        width: 260px;
         height: 260px;
     }
 
-    .tile {
-        font-size: 1.8rem;
-    }
+    .tile { font-size: 1.8rem; }
 
     section {
         padding-left: 1rem;
         padding-right: 1rem;
     }
-}
 
-/* Ajuste para tablets */
-@media (min-width: 641px) and (max-width: 1024px) {
-    .hero-text {
-        font-size: 6rem;
+    .project-card .h-52 {
+        height: clamp(200px, 30vh, 250px);
     }
-}
-
-/* Asegurar que las imágenes de proyecto no pierdan su ratio */
-.project-card .h-52 {
-    height: clamp(200px, 30vh, 250px);
 }

@@ -10,276 +10,481 @@
         rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="img/favicon.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./style.css" />
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js" defer></script>
+
 </head>
 
-<body>
+<body x-data="{ view: 'gate' }">
 
     <div id="loader" class="fixed inset-0 z-[999] flex items-center justify-center bg-black">
         <h1 class="hero-text text-5xl md:text-8xl animate__animated animate__pulse animate__infinite text-green-500">
             2adeCO</h1>
     </div>
 
-    <header class="min-h-screen flex flex-col justify-center items-center p-6 bg-gradient-animate text-center">
-        <div class="animate__animated animate__fadeInUp animate__delay-1s">
-            <h1 class="hero-text text-7xl md:text-9xl mb-4">Santiago<br><span class="text-black">Cabrero</span></h1>
-            <div class="bg-white text-black px-6 py-2 mt-4 inline-block transform -rotate-2">
-                <p class="text-xl md:text-2xl font-black italic">FULLSTACK DEV & .NET ENTHUSIAST</p>
+    <template x-if="view === 'gate'">
+        <section
+            class="fixed inset-0 z-[500] bg-black flex flex-col items-center justify-center p-6 text-center animate__animated animate__fadeIn">
+            <h2 class="hero-text text-5xl md:text-8xl mb-12">¿CÓMO HAS<br><span
+                    class="text-green-500 italic">LLEGADO?</span></h2>
+            <div class="grid gap-6 w-full max-w-md">
+                <button @click="view = 'cv'"
+                    class="btn-contact bg-white text-black p-6 rounded-sm transform hover:scale-105 transition-all text-left">
+                    <span class="font-black text-2xl italic uppercase block">Vengo a ver tu CV</span>
+                    <span class="text-xs font-bold opacity-60">FULLSTACK PORTFOLIO</span>
+                </button>
+                <button @click="view = 'sticker'"
+                    class="btn-contact border-2 border-orange-500 text-orange-500 p-6 rounded-sm transform hover:scale-105 transition-all text-left">
+                    <span class="font-black text-2xl italic uppercase block">He visto una pegatina</span>
+                    <span class="text-xs font-bold opacity-60">PROYECTO: GREAT MANEUVER</span>
+                </button>
+            </div>
+        </section>
+    </template>
+
+    <div x-show="view === 'cv'" x-cloak class="animate__animated animate__fadeIn">
+        <header
+            class="min-h-screen flex flex-col justify-center items-center p-6 bg-gradient-animate text-center overflow-hidden">
+            <div class="animate__animated animate__fadeInUp animate__delay-1s flex flex-col items-center w-full">
+                <h1 class="hero-text text-5xl sm:text-7xl md:text-9xl mb-4 text-white leading-none">Santiago<br><span
+                        class="text-black">Cabrero</span></h1>
+                <div class="bg-white text-black px-6 py-2 mt-4 inline-block transform -rotate-2">
+                    <p class="text-xl md:text-2xl font-black italic">FULLSTACK DEV & .NET ENTHUSIAST</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-6">
+            <section id="sobre-mi" class="py-24 grid md:grid-cols-2 gap-10">
+                <h2 class="hero-text text-6xl text-purple-500" data-aos="fade-right">Sobre_mi</h2>
+                <div class="text-xl leading-relaxed space-y-4 text-zinc-300" data-aos="fade-left">
+                    <p>Estudié cuatro años, SMR y posteriormente DAW en <span class="text-white font-bold">IES La
+                            Arboleda</span>.</p>
+                    <p>Soy Full-Stack, con especialización por tecnologías como: <span
+                            class="text-blue-400 font-bold">.NET, Blazor y WPF</span>.</p>
+                </div>
+            </section>
+
+            <section class="py-20" x-data="{ selected: null }">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="flex flex-col">
+
+                        <button @click="selected !== 1 ? selected = 1 : selected = null"
+                            class="relative overflow-hidden group bg-blue-600 p-8 rounded-3xl h-64 card-custom w-full text-left transition-all duration-300"
+                            :class="selected === 1 ? 'ring-4 ring-white scale-95' : ''">
+
+                            <span
+                                class="absolute -right-4 -bottom-4 text-9xl opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">🚀</span>
+
+
+                            <span class="text-5xl mb-4 block">🌐</span>
+
+                            <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">.NET<br>C#</h3>
+
+                            <p class="mt-2 text-xs font-bold opacity-70">CLICK PARA DETALLES</p>
+
+                        </button>
+
+                        <div x-show="selected === 1" x-collapse x-cloak
+                            class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-blue-600 mt-[-20px] pt-[30px] z-[-1]">
+
+                            <ul class="space-y-2 text-blue-100 font-medium">
+
+                                <li class="flex items-center">⚡ Blazor Web App</li>
+
+                                <li class="flex items-center">📱 MAUI (Multi-platform)</li>
+
+                                <li class="flex items-center">🖥️ WPF Desktop</li>
+
+                                <li class="flex items-center">⌨️ Console Apps</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex flex-col">
+
+                        <button @click="selected !== 2 ? selected = 2 : selected = null"
+                            class="relative overflow-hidden group bg-yellow-400 p-8 rounded-3xl h-64 text-black card-custom w-full text-left transition-all duration-300"
+                            :class="selected === 2 ? 'ring-4 ring-black scale-95' : ''">
+
+                            <span
+                                class="absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">🗄️</span>
+
+
+                            <span class="text-5xl mb-4 block">🗄️</span>
+
+                            <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">SERVER<br>DATA</h3>
+
+                            <p class="mt-2 text-xs font-bold opacity-60">CLICK PARA DETALLES</p>
+
+                        </button>
+
+                        <div x-show="selected === 2" x-collapse x-cloak
+                            class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-yellow-400 mt-[-20px] pt-[30px] z-[-1]">
+
+                            <ul class="space-y-2 text-yellow-100 font-medium">
+
+                                <li>🐘 PHP & PhpMyAdmin</li>
+
+                                <li>💾 SQL Databases</li>
+
+                                <li>☁️ Webempresa / Hosting</li>
+
+                                <li>🐧 Ubuntu & Win Server</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex flex-col">
+
+                        <button @click="selected !== 3 ? selected = 3 : selected = null"
+                            class="relative overflow-hidden group bg-pink-500 p-8 rounded-3xl h-64 card-custom w-full text-left transition-all duration-300"
+                            :class="selected === 3 ? 'ring-4 ring-white scale-95' : ''">
+
+                            <span
+                                class="absolute -right-4 -bottom-4 text-9xl opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">🎨</span>
+
+
+                            <span class="text-5xl mb-4 block">🎨</span>
+
+                            <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">WEB UI<br>CMS</h3>
+
+                            <p class="mt-2 text-xs font-bold opacity-70">CLICK PARA DETALLES</p>
+
+                        </button>
+
+                        <div x-show="selected === 3" x-collapse x-cloak
+                            class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-pink-500 mt-[-20px] pt-[30px] z-[-1]">
+
+                            <ul class="space-y-2 text-pink-100 font-medium">
+
+                                <li>🏗️ HTML, CSS & JS</li>
+
+                                <li>📝 Wordpress / Joomla</li>
+
+                                <li>💅 Bootstrap & Tailwind</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex flex-col">
+
+                        <button @click="selected !== 4 ? selected = 4 : selected = null"
+                            class="relative overflow-hidden group bg-green-500 p-8 rounded-3xl h-64 text-black card-custom w-full text-left transition-all duration-300"
+                            :class="selected === 4 ? 'ring-4 ring-black scale-95' : ''">
+
+                            <span
+                                class="absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">🧠</span>
+
+
+                            <span class="text-5xl mb-4 block">🧠</span>
+
+                            <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">SOFT<br>SKILLS</h3>
+
+                            <p class="mt-2 text-xs font-bold opacity-60">CLICK PARA DETALLES</p>
+
+                        </button>
+
+                        <div x-show="selected === 4" x-collapse x-cloak
+                            class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-green-500 mt-[-20px] pt-[30px] z-[-1]">
+
+                            <ul class="space-y-2 text-green-100 font-medium">
+
+                                <li>🧩 Resolución de Problemas</li>
+
+                                <li>🤝 Git & GitHub Team</li>
+
+                                <li>📄 Documentación Técnica</li>
+
+                                <li>🔥 Aprendizaje Rápido</li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <section id="proyectos" class="py-20">
+
+                <h2 class="hero-text text-4xl md:text-6xl mb-12 text-center text-white break-words" data-aos="zoom-in">
+
+                    MIS_PROYECTOS
+
+                </h2>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+                    <a href="https://github.com/2adeCO/Kenshi-DnD" target="_blank" class="group">
+
+                        <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-green-500 shadow-2xl transition-all h-full"
+                            data-aos="fade-up">
+
+                            <div class="h-52 bg-zinc-800 relative overflow-hidden">
+
+                                <span
+                                    class="absolute top-4 left-4 z-20 bg-green-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">WPF</span>
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
+
+                                </div>
+
+
+                                <img src="./img/kenshi-dnd.png" alt="Kenshi-DnD"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                            </div>
+
+                            <div class="p-6">
+
+                                <h3
+                                    class="text-2xl font-bold text-white mb-2 italic group-hover:text-green-500 transition-colors uppercase tracking-tighter">
+
+                                    Kenshi-DnD</h3>
+
+                                <p class="text-zinc-400 text-sm leading-relaxed">Fan game para proyecto de clase. Una
+                                    mezcla
+
+                                    extraña entre ambos juegos.</p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+
+                    <a href="https://github.com/2adeCO/Buscaminas" target="_blank" class="group">
+
+                        <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-blue-500 shadow-2xl transition-all h-full"
+                            data-aos="fade-up" data-aos-delay="100">
+
+                            <div class="h-52 bg-zinc-800 relative overflow-hidden">
+
+                                <span
+                                    class="absolute top-4 left-4 z-20 bg-blue-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">WPF</span>
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
+
+                                </div>
+
+
+                                <img src="./img/buscaminas.png" alt="Buscaminas"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                            </div>
+
+                            <div class="p-6">
+
+                                <h3
+                                    class="text-2xl font-bold text-white mb-2 italic group-hover:text-blue-500 transition-colors uppercase tracking-tighter">
+
+                                    Buscaminas</h3>
+
+                                <p class="text-zinc-400 text-sm leading-relaxed">El único programa de Buscaminas que
+                                    dejará
+
+                                    crashear tu PC ya que no hay límite de minas.</p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                    <a href="#" class="group">
+
+                        <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-purple-500 shadow-2xl transition-all h-full"
+                            data-aos="fade-up" data-aos-delay="100">
+
+                            <div class="h-52 bg-zinc-800 relative overflow-hidden">
+
+                                <span
+                                    class="absolute top-4 left-4 z-20 bg-purple-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">PHP</span>
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
+
+                                </div>
+
+
+                                <img src="./img/time-hours.png" alt="Time_Hours"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                            </div>
+
+                            <div class="p-6">
+
+                                <h3
+                                    class="text-2xl font-bold text-white mb-2 italic group-hover:text-purple-500 transition-colors uppercase tracking-tighter">
+
+                                    Time_Hours</h3>
+
+                                <p class="text-zinc-400 text-sm leading-relaxed">Aplicación hecha a medida para un
+                                    cliente
+
+                                    para gestionar tiempo de trabajo y generar reportes económicos.</p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                    <a href="#" class="group">
+
+                        <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-orange-500 shadow-2xl transition-all h-full"
+                            data-aos="fade-up" data-aos-delay="100">
+
+                            <div class="h-52 bg-zinc-800 relative overflow-hidden">
+
+                                <span
+                                    class="absolute top-4 left-4 z-20 bg-orange-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">Blazor</span>
+
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
+
+                                </div>
+
+
+                                <img src="./img/great-maneuver.png" alt="great-maneuver"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                            </div>
+
+                            <div class="p-6">
+
+                                <h3
+                                    class="text-2xl font-bold text-white mb-2 italic group-hover:text-orange-500 transition-colors uppercase tracking-tighter">
+
+                                    Great-Maneuver (En desarrollo)</h3>
+
+                                <p class="text-zinc-400 text-sm leading-relaxed">App con el propósito de acercar los
+                                    TTRPGS
+
+                                    a un público más amplio y facilitar el trabajo ampliamente a los GM.</p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+            </section>
+
+            <section id="game-section" class="py-20 text-center">
+                <h2 id="error-title" class="hero-text text-5xl mb-10 error-glow" data-aos="zoom-in">ERROR.</h2>
+                <div id="puzzle-grid"></div>
+                <button id="reset-btn"
+                    class="mt-8 px-8 py-3 bg-white text-black font-black hover:bg-green-500 transition-all uppercase italic">
+                    DISPOSE_CHANGES
+                </button>
+            </section>
+
+            <section id="contacto" class="py-24 text-center border-t border-zinc-800">
+                <h2 class="hero-text text-5xl sm:text-7xl md:text-9xl mb-8" data-aos="flip-up">CONTACTO</h2>
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <a href="mailto:arboledasantiagocabrero@gmail.com"
+                        class="btn-contact bg-white text-black px-8 py-3 font-black uppercase italic rounded-sm">Email_Me</a>
+                    <a href="https://github.com/2adeCO"
+                        class="btn-contact border-2 border-white text-white px-8 py-3 font-black uppercase italic rounded-sm">GITHUB</a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="p-10 text-center text-zinc-700">
+            <p>© 2026 Santiago Cabrero • Doing webs</p>
+        </footer>
+    </div>
+
+    <template x-if="view === 'sticker'">
+    <section 
+        class="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-6 text-center animate__animated animate__zoomIn"
+        style="background-image: radial-gradient(circle at center, #1a1a1a 0%, #09090b 100%);">
+        
+        <div class="max-w-3xl w-full">
+            <div class="inline-block bg-orange-500 text-black px-4 py-1 font-black text-xs md:text-sm uppercase mb-8 transform -rotate-2 shadow-lg">
+                🚀 Pegatina encontrada...
+            </div>
+
+            <h1 class="hero-text text-6xl md:text-[120px] mb-6 text-white italic leading-none tracking-tighter">
+                GREAT<br>
+                <span class="text-orange-500">MANEUVER</span>
+            </h1>
+
+            <p class="text-lg md:text-2xl text-zinc-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                ¿Buscas un nuevo <span class="text-white font-bold">VTT indie</span> para Dragones y Mazmorras? 
+                ¡Habla conmigo para dar feedback, propuestas o para recibir noticias!
+            </p>
+
+            <div class="flex flex-col items-center gap-8">
+                <a href="mailto:contact@greatmaneuver.app"
+                   class="btn-contact bg-white text-black px-10 py-4 font-black uppercase italic rounded-sm text-lg hover:bg-orange-500 hover:text-white transition-colors duration-300">
+                    Contacta conmigo
+                </a>
+
+                <button @click="view = 'cv'"
+                        class="group text-zinc-500 hover:text-white uppercase font-black italic tracking-[0.2em] text-xs transition-all">
+                    <span class="inline-block transform group-hover:-translate-x-2 transition-transform duration-200">←</span> 
+                    Volver al portafolio
+                    <div class="h-px bg-zinc-800 w-0 group-hover:w-full transition-all duration-300 mx-auto mt-1"></div>
+                </button>
             </div>
         </div>
-    </header>
-
-    <main class="container mx-auto px-6">
-        <section id="sobre-mi" class="py-24 grid md:grid-cols-2 gap-10">
-            <h2 class="hero-text text-6xl text-purple-500" data-aos="fade-right">Sobre_mi</h2>
-            <div class="text-xl leading-relaxed space-y-4 text-zinc-300" data-aos="fade-left">
-                <p>Estudié cuatro años, SMR y posteriormente DAW en <span class="text-white font-bold">IES La
-                        Arboleda</span>.</p>
-                <p>Soy Full-Stack, con un apetito inusual por tecnologías como: <span
-                        class="text-blue-400 font-bold">.NET, Blazor y
-                        WPF</span>. Sé montar cosas desde 0 y también arreglar rotas.</p>
-            </div>
-        </section>
-        <section class="py-20" x-data="{ selected: null }">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <div class="flex flex-col">
-                    <button @click="selected !== 1 ? selected = 1 : selected = null"
-                        class="relative overflow-hidden group bg-blue-600 p-8 rounded-3xl h-64 card-custom w-full text-left transition-all duration-300"
-                        :class="selected === 1 ? 'ring-4 ring-white scale-95' : ''">
-                        <span
-                            class="absolute -right-4 -bottom-4 text-9xl opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">🚀</span>
-
-                        <span class="text-5xl mb-4 block">🚀</span>
-                        <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">.NET<br>C#</h3>
-                        <p class="mt-2 text-xs font-bold opacity-70">CLICK PARA DETALLES</p>
-                    </button>
-                    <div x-show="selected === 1" x-collapse x-cloak
-                        class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-blue-600 mt-[-20px] pt-[30px] z-[-1]">
-                        <ul class="space-y-2 text-blue-100 font-medium">
-                            <li class="flex items-center">⚡ Blazor Web App</li>
-                            <li class="flex items-center">📱 MAUI (Multi-platform)</li>
-                            <li class="flex items-center">🖥️ WPF Desktop</li>
-                            <li class="flex items-center">⌨️ Console Apps</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="flex flex-col">
-                    <button @click="selected !== 2 ? selected = 2 : selected = null"
-                        class="relative overflow-hidden group bg-yellow-400 p-8 rounded-3xl h-64 text-black card-custom w-full text-left transition-all duration-300"
-                        :class="selected === 2 ? 'ring-4 ring-black scale-95' : ''">
-                        <span
-                            class="absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">🗄️</span>
-
-                        <span class="text-5xl mb-4 block">🗄️</span>
-                        <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">SERVER<br>DATA</h3>
-                        <p class="mt-2 text-xs font-bold opacity-60">CLICK PARA DETALLES</p>
-                    </button>
-                    <div x-show="selected === 2" x-collapse x-cloak
-                        class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-yellow-400 mt-[-20px] pt-[30px] z-[-1]">
-                        <ul class="space-y-2 text-yellow-100 font-medium">
-                            <li>🐘 PHP & PhpMyAdmin</li>
-                            <li>💾 SQL Databases</li>
-                            <li>☁️ Webempresa / Hosting</li>
-                            <li>🐧 Ubuntu & Win Server</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="flex flex-col">
-                    <button @click="selected !== 3 ? selected = 3 : selected = null"
-                        class="relative overflow-hidden group bg-pink-500 p-8 rounded-3xl h-64 card-custom w-full text-left transition-all duration-300"
-                        :class="selected === 3 ? 'ring-4 ring-white scale-95' : ''">
-                        <span
-                            class="absolute -right-4 -bottom-4 text-9xl opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-500">🎨</span>
-
-                        <span class="text-5xl mb-4 block">🎨</span>
-                        <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">WEB UI<br>CMS</h3>
-                        <p class="mt-2 text-xs font-bold opacity-70">CLICK PARA DETALLES</p>
-                    </button>
-                    <div x-show="selected === 3" x-collapse x-cloak
-                        class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-pink-500 mt-[-20px] pt-[30px] z-[-1]">
-                        <ul class="space-y-2 text-pink-100 font-medium">
-                            <li>🏗️ HTML, CSS & JS</li>
-                            <li>📝 Wordpress / Joomla</li>
-                            <li>💅 Bootstrap & Tailwind</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="flex flex-col">
-                    <button @click="selected !== 4 ? selected = 4 : selected = null"
-                        class="relative overflow-hidden group bg-green-500 p-8 rounded-3xl h-64 text-black card-custom w-full text-left transition-all duration-300"
-                        :class="selected === 4 ? 'ring-4 ring-black scale-95' : ''">
-                        <span
-                            class="absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500">🧠</span>
-
-                        <span class="text-5xl mb-4 block">🧠</span>
-                        <h3 class="font-black text-3xl uppercase leading-none tracking-tighter">SOFT<br>SKILLS</h3>
-                        <p class="mt-2 text-xs font-bold opacity-60">CLICK PARA DETALLES</p>
-                    </button>
-                    <div x-show="selected === 4" x-collapse x-cloak
-                        class="bg-zinc-900/50 backdrop-blur-md p-6 rounded-b-3xl border-x-2 border-b-2 border-green-500 mt-[-20px] pt-[30px] z-[-1]">
-                        <ul class="space-y-2 text-green-100 font-medium">
-                            <li>🧩 Resolución de Problemas</li>
-                            <li>🤝 Git & GitHub Team</li>
-                            <li>📄 Documentación Técnica</li>
-                            <li>🔥 Aprendizaje Rápido</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="proyectos" class="py-20">
-            <h2 class="hero-text text-4xl md:text-6xl mb-12 text-center text-white break-words" data-aos="zoom-in">
-                MIS_PROYECTOS
-            </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <a href="https://github.com/2adeCO/Kenshi-DnD" target="_blank" class="group">
-                    <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-green-500 shadow-2xl transition-all h-full"
-                        data-aos="fade-up">
-                        <div class="h-52 bg-zinc-800 relative overflow-hidden">
-                            <span
-                                class="absolute top-4 left-4 z-20 bg-green-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">WPF</span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
-                            </div>
-
-                            <img src="./img/kenshi-dnd.png" alt="Kenshi-DnD"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        </div>
-                        <div class="p-6">
-                            <h3
-                                class="text-2xl font-bold text-white mb-2 italic group-hover:text-green-500 transition-colors uppercase tracking-tighter">
-                                Kenshi-DnD</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Fan game para proyecto de clase. Una mezcla
-                                extraña entre ambos juegos.</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="https://github.com/2adeCO/Buscaminas" target="_blank" class="group">
-                    <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-blue-500 shadow-2xl transition-all h-full"
-                        data-aos="fade-up" data-aos-delay="100">
-                        <div class="h-52 bg-zinc-800 relative overflow-hidden">
-                            <span
-                                class="absolute top-4 left-4 z-20 bg-blue-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">WPF</span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
-                            </div>
-
-                            <img src="./img/buscaminas.png" alt="Buscaminas"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        </div>
-                        <div class="p-6">
-                            <h3
-                                class="text-2xl font-bold text-white mb-2 italic group-hover:text-blue-500 transition-colors uppercase tracking-tighter">
-                                Buscaminas</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">El único programa de Buscaminas que dejará
-                                crashear tu PC ya que no hay límite de minas.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="group">
-                    <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-purple-500 shadow-2xl transition-all h-full"
-                        data-aos="fade-up" data-aos-delay="100">
-                        <div class="h-52 bg-zinc-800 relative overflow-hidden">
-                            <span
-                                class="absolute top-4 left-4 z-20 bg-purple-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">PHP</span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
-                            </div>
-
-                            <img src="./img/time-hours.png" alt="Time_Hours"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        </div>
-                        <div class="p-6">
-                            <h3
-                                class="text-2xl font-bold text-white mb-2 italic group-hover:text-purple-500 transition-colors uppercase tracking-tighter">
-                                Time_Hours</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">Aplicación hecha a medida para un cliente
-                                para gestionar tiempo de trabajo y generar reportes económicos.</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="group">
-                    <div class="project-card bg-zinc-900 overflow-hidden rounded-xl border-2 border-zinc-800 hover:border-orange-500 shadow-2xl transition-all h-full"
-                        data-aos="fade-up" data-aos-delay="100">
-                        <div class="h-52 bg-zinc-800 relative overflow-hidden">
-                            <span
-                                class="absolute top-4 left-4 z-20 bg-orange-500 text-black text-[10px] font-black px-2 py-1 rounded uppercase">Blazor</span>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-60">
-                            </div>
-
-                            <img src="./img/great-maneuver.png" alt="great-maneuver"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        </div>
-                        <div class="p-6">
-                            <h3
-                                class="text-2xl font-bold text-white mb-2 italic group-hover:text-orange-500 transition-colors uppercase tracking-tighter">
-                                Great-Maneuver (En desarrollo)</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed">App con el propósito de acercar los TTRPGS
-                                a un público más amplio y facilitar el trabajo ampliamente a los GM.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <section id="game-section" class="py-20 text-center">
-            <h2 class="hero-text text-5xl mb-10 error-glow" data-aos="zoom-in">ERROR.</h2>
-
-            <div id="puzzle-grid"></div>
-
-            <button id="reset-btn"
-                class="mt-8 px-8 py-3 bg-white text-black font-black hover:bg-green-500 transition-all uppercase italic">
-                DISPOSE_CHANGES
-            </button>
-        </section>
-
-        <section id="contacto" class="py-24 text-center border-t border-zinc-800">
-            <h2 class="hero-text text-5xl sm:text-7xl md:text-9xl mb-8 break-words" data-aos="flip-up">
-                CONTACTO
-            </h2>
-            <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <a href="mailto:arboledasantiagocabrero@gmail.com"
-                    class="btn-contact bg-white text-black px-8 py-3 font-black uppercase italic rounded-sm">Email_Me</a>
-                <a href="https://github.com/2adeCO"
-                    class="btn-contact border-2 border-white text-white px-8 py-3 font-black uppercase italic rounded-sm">GITHUB</a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="p-10 text-center text-zinc-700">
-        <p>© 2026 Santiago Cabrero • Doing webs</p>
-    </footer>
+    </section>
+</template>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
-            setTimeout(() => { loader.classList.add('fade-out'); }, 1000);
+            setTimeout(() => {
+                loader.classList.add('fade-out');
+                AOS.init({ duration: 1000, once: true });
+            }, 1000);
         });
 
+        // PUZZLE LOGIC
         document.addEventListener('DOMContentLoaded', () => {
-            AOS.init({ duration: 1000, once: true });
             const grid = document.getElementById('puzzle-grid');
             const resetBtn = document.getElementById('reset-btn');
+            const errorTitle = document.getElementById('error-title');
             const colors = ['#1DB954', '#1ed760', '#63d05d', '#a1c65a', '#d9b85a', '#ff9a5a', '#ff6d6d', '#ff4132'];
             let tiles = [];
 
             function createPuzzle() {
-                grid.innerHTML = ''; tiles = [];
+                grid.innerHTML = '';
+                tiles = [];
+                // Reset states
+                document.body.classList.remove('special-mode');
+                grid.classList.remove('win-glow');
+                errorTitle.textContent = "ERROR.";
+                errorTitle.classList.add('error-glow');
+
                 for (let i = 1; i <= 8; i++) {
                     const tile = document.createElement('div');
                     tile.className = 'tile';
@@ -292,27 +497,49 @@
                 empty.className = 'tile empty';
                 empty.dataset.value = '0';
                 tiles.push(empty);
-                shuffle(tiles); render();
+
+                shuffle(tiles);
+                render();
             }
 
             function render() { tiles.forEach(t => grid.appendChild(t)); }
-            function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } }
+
+            function shuffle(a) {
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+            }
 
             grid.addEventListener('click', (e) => {
                 const t = e.target.closest('.tile');
-                if (!t || t.classList.contains('empty')) return;
-                const idx = tiles.indexOf(t), eIdx = tiles.findIndex(x => x.classList.contains('empty'));
-                const d = Math.abs(idx - eIdx), sR = Math.floor(idx / 3) === Math.floor(eIdx / 3);
-                if ((d === 1 && sR) || d === 3) {
+                if (!t || t.classList.contains('empty') || grid.classList.contains('win-glow')) return;
+
+                const idx = tiles.indexOf(t);
+                const eIdx = tiles.findIndex(x => x.classList.contains('empty'));
+
+                const diff = Math.abs(idx - eIdx);
+                const sameRow = Math.floor(idx / 3) === Math.floor(eIdx / 3);
+
+                if ((diff === 1 && sameRow) || diff === 3) {
                     [tiles[idx], tiles[eIdx]] = [tiles[eIdx], tiles[idx]];
                     render();
-                    if (tiles.map(x => x.dataset.value).join('') === '123456780') {
-                        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                        document.body.classList.add('special-mode');
-                        grid.classList.add('win-glow');
-                    }
+                    checkWin();
                 }
             });
+
+            function checkWin() {
+                const currentOrder = tiles.map(x => x.dataset.value).join('');
+                if (currentOrder === '123456780') {
+                    // EFECTO DE VICTORIA
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
+                    document.body.classList.add('special-mode');
+                    grid.classList.add('win-glow');
+                    errorTitle.textContent = "SOLVED.";
+                    errorTitle.classList.remove('error-glow');
+                }
+            }
+
             resetBtn.addEventListener('click', createPuzzle);
             createPuzzle();
         });
