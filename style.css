@@ -2,12 +2,13 @@
    1. VARIABLES Y CONFIGURACIÓN
    ========================================================================== */
 :root {
-    --spotify-green: #1DB954;
-    --spotify-black: #121212;
-    --spotify-purple: #5038a0;
-    --spotify-pink: #ff4132;
-    --spotify-yellow: #f5df4d;
-    --bg-color: var(--spotify-green); /* Color por defecto para tiles */
+    --neon-green: #00ff41;
+    --neon-blue: #00f3ff;
+    --neon-pink: #ff00ff;
+    --neon-yellow: #f5df4d;
+    --cyber-black: #050505;
+    --cyber-dark: #0a0a0a;
+    --cyber-gray: #1a1a1a;
 }
 
 html, body {
@@ -17,11 +18,31 @@ html, body {
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--spotify-black);
-    color: white;
+    background-color: var(--cyber-black);
+    background-image: 
+        linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    color: #e4e4e7;
     margin: 0;
     padding: 0;
     transition: background-color 0.8s ease;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    z-index: 1000;
 }
 
 [x-cloak] { display: none !important; }
@@ -36,8 +57,16 @@ body {
 }
 
 @keyframes errorPulse {
-    0%, 100% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 0, 51, 0.7); opacity: 1; }
-    50% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255, 0, 51, 0.7); opacity: 0.8; }
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px var(--neon-pink); opacity: 1; }
+    50% { transform: scale(1.02); text-shadow: 0 0 30px var(--neon-pink); opacity: 0.8; }
+}
+
+@keyframes glitchText {
+    0% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-blue); }
+    25% { text-shadow: -2px 0 var(--neon-pink), 2px 0 var(--neon-blue); }
+    50% { text-shadow: 2px -2px var(--neon-pink), -2px 2px var(--neon-blue); }
+    75% { text-shadow: -2px 2px var(--neon-pink), 2px -2px var(--neon-blue); }
+    100% { text-shadow: 2px 0 var(--neon-pink), -2px 0 var(--neon-blue); }
 }
 
 /* ==========================================================================
@@ -46,11 +75,16 @@ body {
 
 /* Texto Hero */
 .hero-text {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     line-height: 0.85;
     text-transform: uppercase;
     font-weight: 900;
     letter-spacing: -0.05em;
+    position: relative;
+}
+
+.glitch-hover:hover {
+    animation: glitchText 0.3s infinite;
 }
 
 /* Loader */
@@ -72,48 +106,117 @@ body {
 }
 
 /* Tarjetas de Proyecto y Skills */
-.project-card, .card-custom {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.project-card {
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+    background: var(--cyber-dark);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
-    z-index: 10;
+    overflow: hidden;
 }
 
 .project-card:hover { 
-    transform: translateY(-10px) scale(1.02); 
+    transform: translateY(-12px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.project-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
+.project-badge {
+    font-family: 'JetBrains Mono', monospace;
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%, 0 35%);
 }
 
-.project-card:hover img { 
-    transform: scale(1.1); 
+.card-custom {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    background: rgba(10, 10, 10, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px);
+    border-radius: 0 !important;
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.project-card:hover::before {
+    border-color: var(--neon-blue);
+}
+
+.card-custom {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    background: rgba(10, 10, 10, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(20px);
+    border-radius: 0 !important;
 }
 
 .card-custom:hover { 
-    transform: scale(1.03) rotate(-1.5deg); 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 0 30px currentColor;
+}
+
+.card-custom[style*="--neon-blue"] { border-color: var(--neon-blue) !important; color: var(--neon-blue); }
+.card-custom[style*="--neon-yellow"] { border-color: var(--neon-yellow) !important; color: var(--neon-yellow); }
+.card-custom[style*="--neon-pink"] { border-color: var(--neon-pink) !important; color: var(--neon-pink); }
+.skill-details {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%, 0 90%);
+}
+
+.skill-details li {
+    transition: all 0.2s ease;
+}
+
+.skill-details li:hover {
+    padding-left: 10px;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 /* Botones */
 .btn-contact {
-    transition: all 0.3s ease;
-    box-shadow: 8px 8px 0px #000;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-contact:hover {
-    box-shadow: 0px 0px 0px #000;
-    transform: translate(4px, 4px);
+    transform: scale(1.05);
+    background: white;
+    color: black;
+    box-shadow: 0 0 20px white;
+}
+
+.btn-contact::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn-contact:hover::after {
+    left: 100%;
 }
 
 /* Utilidades */
 .bg-gradient-animate {
-    background: linear-gradient(-45deg, #1DB954, #5038a0, #ff4132, #212121);
+    background: linear-gradient(-45deg, var(--cyber-black), #003b11, #1e003b, var(--cyber-black));
     background-size: 400% 400%;
-    animation: gradientShift 12s ease infinite;
+    animation: gradientShift 20s ease infinite;
 }
 
 ul li::before {
@@ -165,24 +268,29 @@ ul li::before {
    5. ESTADOS ESPECIALES Y ERRORES
    ========================================================================== */
 .error-glow {
-    color: #ff0033;
+    color: var(--neon-pink);
     animation: errorPulse 1.5s infinite;
 }
 
 .win-glow {
-    border-color: var(--spotify-green) !important;
-    box-shadow: 0 0 50px #fff, 0 0 100px var(--spotify-green) !important;
+    border-color: var(--neon-green) !important;
+    box-shadow: 0 0 50px var(--neon-green) !important;
     transform: scale(1.05);
 }
 
+/* Estilos de botones tech */
+.clip-tech {
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+}
+
 /* Modos de tema */
-body.special-mode { background-color: #ff0050 !important; }
+body.special-mode { background-color: var(--neon-pink) !important; }
 body.special-mode .hero-text { color: #fff; text-shadow: 4px 4px 0px #000; }
 
 .special-mode #game-section h2 { 
-    color: var(--spotify-green); 
+    color: var(--neon-green); 
     animation: none; 
-    text-shadow: 0 0 20px var(--spotify-green); 
+    text-shadow: 0 0 20px var(--neon-green); 
 }
 
 /* ==========================================================================
